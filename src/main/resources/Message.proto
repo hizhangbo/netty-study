@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_package = "io.github.hizhangbo.netty.protobuf.exp2";
+option java_outer_classname = "Message";
+
+message Parent {
+    enum ChildType {
+        Child1 = 0;
+        Child2 = 1;
+    }
+    ChildType child_type = 1;
+
+    oneof dataBody {
+        Child1 child1 = 2;
+        Child2 child2 = 3;
+    }
+}
+
+message Child1 {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+}
+
+message Child2 {
+    string name = 1;
+    int32 age = 2;
+}
