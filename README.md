@@ -34,3 +34,9 @@
  - Worker Thread
    - 将 SocketChannel 注册到选择的 NioEventLoop 的 selector
    - 注册读事件（OP_READ）到 selector 上
+
+## receive data
+
+## service handler
+
+## send data
