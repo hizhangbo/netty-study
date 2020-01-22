@@ -89,8 +89,10 @@ NioSocketChannel.NioSocketChannelUnsafe.read() -> AbstractNioByteChannel -> OP_R
 ChannelHandlerContext.channel().write(); 从TailContext开始执行
 ChannelHandlerContext.write(); 从当前的Context开始执行。
 ```
+## break connection
 
 
+## shutdown server
 
 
 
