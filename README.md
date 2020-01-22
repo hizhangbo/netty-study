@@ -23,8 +23,8 @@
    - 注册接收连接事件（OP_ACCEPT）到 selector
    
 ```
-说明：NioEventLoop和selector一一对应，在创建NioEventLoopGroup时，会对每个NioEventLoop中的selector初始化。
-
+说明：
+NioEventLoop和selector一一对应，在创建NioEventLoopGroup时，会对每个NioEventLoop中的selector初始化。
 ```
 ## build connection
  - Boss Thread
@@ -36,7 +36,19 @@
    - 注册读事件（OP_READ）到 selector 上
 
 ## receive data
-
+ - Worker Thread
+   - 多路复用器（selector）接收到OP_READ事件
+   - 处理OP_READ事件：NioSocketChannel.NioSocketChannelUnsafe.read()
+     - 分配一个初始1024字节的byte buffer来接收数据
+     - 从channel接收数据到byte buffer
+     - 记录实际接收数据大小，调整下次分配byte buffer 大小
+     - 触发pipeline.fireChannelRead(byteBuf)把读取到的数据传播出去
+     - 判断接收byte buffer是否已满：是，尝试继续读取直到没有数据或满16次；否，结束本轮读取，等待下次OP_READ事件
+```
+说明：
+1.自适应数据大小的分配器（AdaptiveRecvByteBufAllocator）
+2.连续读（defaultMaxMessagesPerRead）
+```
 ## service handler
 
 ## send data
