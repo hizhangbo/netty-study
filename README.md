@@ -48,7 +48,7 @@ NioEventLoop和selector一一对应，在创建NioEventLoopGroup时，会对每�
 ```
 说明：
 1.自适应数据大小的分配器（AdaptiveRecvByteBufAllocator）
-2.连续读（defaultMaxMessagesPerRead）
+2.连续读（DefaultMaxMessagesPerRead/DefaultMaxMessagesRecvByteBufAllocator）
 3.NioEventLoop -> unsafe.read()中channel的选择：
 NioServerSocketChannel.read() -> AbstractNioMessageChannel -> OP_ACCEPT
 NioSocketChannel.NioSocketChannelUnsafe.read() -> AbstractNioByteChannel -> OP_READ
