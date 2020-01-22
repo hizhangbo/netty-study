@@ -34,6 +34,7 @@ NioEventLoop和selector一一对应，在创建NioEventLoopGroup时，会对每�
  - Worker Thread
    - 将 SocketChannel 注册到选择的 NioEventLoop 的 selector
    - 注册读事件（OP_READ）到 selector 上
+   - NioServerSocketChannel.read()创建连接
 
 ## receive data
  - Worker Thread
@@ -48,6 +49,9 @@ NioEventLoop和selector一一对应，在创建NioEventLoopGroup时，会对每�
 说明：
 1.自适应数据大小的分配器（AdaptiveRecvByteBufAllocator）
 2.连续读（defaultMaxMessagesPerRead）
+3.NioEventLoop -> unsafe.read()中channel的选择：
+NioServerSocketChannel.read() -> AbstractNioMessageChannel -> OP_ACCEPT
+NioSocketChannel.NioSocketChannelUnsafe.read() -> AbstractNioByteChannel -> OP_READ
 ```
 ## service handler
 
