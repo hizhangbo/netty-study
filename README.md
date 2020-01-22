@@ -77,7 +77,18 @@ NioSocketChannel.NioSocketChannelUnsafe.read() -> AbstractNioByteChannel -> OP_R
      |flush|把buffer中的数据发送出去|
      |writeAndFlush|写到buffer，立马发送|
      |关键buffer|ChannelOutboundBuffer|
+```
+说明：
+数据写不进去时，会停止写，注册一个OP_WRITE事件，来通知什么时候写进去了。
+批量写数据：
+1.MaxBytesPerGatheringWrite：写入数据最大优化
+2.WriteSpinCount:16次限制，避免Channel被相同写事件一直占用
+待写入数据过多：
+超过WriteBufferWaterMark.high()时，标志位改为false，应用端可判断是否继续写
 
+ChannelHandlerContext.channel().write(); 从TailContext开始执行
+ChannelHandlerContext.write(); 从当前的Context开始执行。
+```
 
 
 
