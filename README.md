@@ -54,5 +54,46 @@ NioServerSocketChannel.read() -> AbstractNioMessageChannel -> OP_ACCEPT
 NioSocketChannel.NioSocketChannelUnsafe.read() -> AbstractNioByteChannel -> OP_READ
 ```
 ## service handler
+ - 接收数据 pipeline.fireChannelRead(byteBuf)
+ - 执行Handler Pipeline
+   - 实现了ChannelInboundHandler
+   - 实现方法channelRead不能加注解@Skip
+   - 读数据是Head -> Tail，写数据是Tail -> Head
 
 ## send data
+ - Write
+   - 写数据到buffer
+     - ChannelOutboundBuffer#addMessage
+ - Flush
+   - 发送buffer里面的数据
+     - AbstractChannel.AbstractUnsafe#flush
+       - 准备数据：ChannelOutBoundBuffer#addFlush
+       - 发送数据：NioSocketChannel#doWrite
+ 
+ - 写数据的三种方式
+   - |方式|区别|
+     |---|---|
+     |write|写到一个buffer|
+     |flush|把buffer中的数据发送出去|
+     |writeAndFlush|写到buffer，立马发送|
+     |关键buffer|ChannelOutboundBuffer|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
