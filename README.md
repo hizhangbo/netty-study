@@ -90,7 +90,13 @@ ChannelHandlerContext.channel().write(); 从TailContext开始执行
 ChannelHandlerContext.write(); 从当前的Context开始执行。
 ```
 ## break connection
-
+ - 多路复用器（selector）接收到OP_READ事件
+ - 处理OP_READ事件：NioSocketChannel。NioSocketChannelUnsafe.read()
+   - 接收数据
+   - 判断接收的数据大小，如果<0，则执行关闭
+     - 关闭channel，多路复用器的key
+     - 清理消息：不接收新消息，fail掉所有queue中消息
+     - 触发fireChannelInactive和fireChannelUnregistered
 
 ## shutdown server
 
