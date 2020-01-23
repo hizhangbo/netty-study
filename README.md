@@ -99,8 +99,12 @@ ChannelHandlerContext.write(); 从当前的Context开始执行。
      - 触发fireChannelInactive和fireChannelUnregistered
 
 ## shutdown server
-
-
+ - shutdown
+   - bossGroup.shutdownGracefully();
+   - workerGroup.shutdownGracefully();
+ - 关闭所有Group中的NioEventLoop
+   - 修改NioEventLoop的State标志位
+   - NioEventLoop判断State执行退出
 
 
 
