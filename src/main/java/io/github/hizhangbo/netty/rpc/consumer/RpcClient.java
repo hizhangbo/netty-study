@@ -57,6 +57,7 @@ public class RpcClient {
                     System.out.println("getBean()" + (++count));
                     remoteService = rpcClientHandler.getRemoteService();
                     remoteService.setParameter(providerName + args[0]);
+//                    return method.invoke();
                     return executorService.submit(remoteService).get();
                 }));
     }
